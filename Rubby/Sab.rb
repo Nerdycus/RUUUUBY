@@ -1,10 +1,22 @@
 #!/usr/bin/ruby -w
 
-puts 'kys'
-3.times do
-puts 'now'
-end
-3.times do
+loc = "a house"
+jjj = 3
+welcome = 'You are in ' + loc + '.'
+puts welcome
+	while jjj==3 do
 goose = gets
-puts goose
+if goose.include? "move"
+  if goose.include? "out"
+loc = "the outside"
+puts "You go to " + loc + '.'
+  end
+     if goose.include? "in"
+loc = "a house"
+puts "You go to " + loc + '.'
+     end
 end
+if goose.include? "quit"
+jjj = 2
+end
+	end
