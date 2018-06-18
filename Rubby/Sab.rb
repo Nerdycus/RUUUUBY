@@ -6,6 +6,9 @@ ceilfaninst=false
 coatloc="the cottage"
 rkillloc="the road"
 ceilfanloc="the backyard"
+lcoatvar=0
+lceilfanvar=0
+lrkillvar=0
 welcome = 'You are in ' + loc + '.'
 puts welcome
 	while jjj==3 do
@@ -21,12 +24,14 @@ goose="drop ceiling fan"
    end
      end
   if goose.include? "pick up" or goose.include? "grab" or goose.include? "get" or goose.include? "obtain"
-if goose.include?"coat" and coatloc=="player"
+if goose.include?"coat" and coatloc=="player" and lcoatvar==1
 puts "You're holding it!"
 elsif goose.include?"coat" and coatloc!=loc
 puts"What coat?"
+elsif goose.include?"coat" and lcoatvar==0 and coatloc==loc
+puts"What coat?"
 end
-if goose.include?"coat" and coatloc==loc
+if goose.include?"coat" and coatloc==loc and lcoatvar==1
 puts "You pick up the coat."
 coatloc = "player"
   if ceilfanloc =="player"
@@ -38,7 +43,7 @@ rkillloc=loc
 puts "You no longer have the roadkill. Thank goodness."
   end
 end
-if goose.include?"ceiling fan" and ceilfanloc=="player"
+if goose.include?"ceiling fan" and ceilfanloc=="player" and lceilfanvar==1
 puts "You're holding it!"
 elsif goose.include?"ceiling fan" and ceilfanloc!=loc
 puts"What fan?"
@@ -46,7 +51,7 @@ end
 if goose.include?"fan" and ceilfanloc==loc and ceilfaninst==true
 puts "It's attached, you can't remove it."
 end
-if goose.include?"fan" and ceilfanloc==loc and ceilfaninst==false
+if goose.include?"fan" and ceilfanloc==loc and ceilfaninst==false and lceilfanvar==1
 puts "You pick up the ceiling fan."
 ceilfanloc = "player"
   if coatloc =="player"
@@ -58,12 +63,12 @@ rkillloc=loc
 puts "You no longer have the roadkill. Thank goodness."
   end
 end
-if goose.include?"roadkill" and rkillloc=="player"
+if goose.include?"roadkill" and rkillloc=="player" and lrkillvar==1
 puts "You're holding it!"
-elsif goose.include?"roadkill" and rkillloc!=loc
+elsif goose.include?"roadkill" and rkillloc!=loc and lrkillvar==1
 puts"It's not here, thank goodness."
 end
-if goose.include?"roadkill" and rkillloc==loc
+if goose.include?"roadkill" and rkillloc==loc and lrkillvar==1
 puts "You don't know why, but you pick up the roadkill."
 rkillloc = "player"
   if coatloc =="player"
@@ -80,27 +85,33 @@ end
 if goose.include?"coat" and coatloc=="player"
 puts "You no longer have the coat."
 coatloc = loc
-elsif goose.include?"coat" and coatloc==loc
+elsif goose.include?"coat" and coatloc==loc and lcoatvar==1
 puts "It's already on the floor!"
 elsif goose.include?"coat" and coatloc!=loc
+puts"What coat?"
+elsif goose.include?"coat" and lcoatvar==0 and coatloc==loc
 puts"What coat?"
 end
 if goose.include?"roadkill" and rkillloc=="player"
 puts "You no longer have the roadkill. Thank goodness."
 rkillloc = loc
-elsif goose.include?"roadkill" and rkillloc==loc
+elsif goose.include?"roadkill" and rkillloc==loc and lrkillvar==1
 puts "It's already on the floor!"
 elsif goose.include?"roadkill" and rkillloc!=loc
+puts"What roadkill?"
+elsif goose.include?"roadkill" and lrkillvar==1 and rkillloc==loc
 puts"What roadkill?"
 end
 if goose.include?"ceiling fan" and ceilfanloc=="player"
 puts "You no longer have the ceiling fan."
 ceilfanloc = loc
-elsif goose.include?"ceiling fan" and ceilfanloc==loc and ceilfaninst==false
+elsif goose.include?"ceiling fan" and ceilfanloc==loc and ceilfaninst==false and lceilfanvar==1
 puts "It's already on the floor!"
 elsif goose.include?"ceiling fan" and ceilfanloc==loc and ceilfaninst == true
 puts "The fan's installed on the ceiling, you don't have it."
 elsif goose.include?"ceiling fan" and ceilfanloc!=loc
+puts"What fan?"
+elsif goose.include?"ceiling fan" and lceilfanvar==0 and ceilfanloc==loc
 puts"What fan?"
 end
   end
@@ -152,9 +163,11 @@ if goose.include? " in" or goose.include? "cottage"
 puts "A small, quaint little cottage, and it leads to a backyard and the road. You expect the residents are long gone."
 if coatloc =="the cottage" and loc =="the cottage" and ceilfaninst==false
 puts "You see a coat hanging on a rack."
+lcoatvar=1
 end
 if coatloc =="the cottage" and loc =="the cottage" and ceilfaninst==true
 puts "You see a coat hanging on a rack, and there's a ceiling fan on the ceiling."
+lcoatvar=1
 end
 if coatloc !="the cottage" and loc =="the cottage" and ceilfaninst==false
 puts "You see a coat-hanging rack."
@@ -183,6 +196,7 @@ puts "You see a ceiling fan on the ground."
 end
 if rkillloc=="the road" and loc =="the road"
 puts "You see a roadkill on the ground. Eeew."
+lrkillvar=1
 end
     else
 puts "You can't see that!"
